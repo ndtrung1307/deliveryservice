@@ -11,7 +11,7 @@ const init = async () => {
     });
 
     await server.register([{
-        plugin: require('./hapi-swagger/hapi-swagger')
+        plugin: require('./hapi-swagger')
     }]);
 
     server.route({
