@@ -2,14 +2,13 @@ require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 var Joi = require('@hapi/joi');
 
-var consumer = require('./consumer');
 var producer = require('./producer');
 
 
 Joi.objectId = require('joi-objectid')(Joi);
 
 const init = async () => {
-    consumer;
+
     const server = Hapi.server({
         port: process.env.PORT
     });
