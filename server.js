@@ -2,10 +2,14 @@ require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 var Joi = require('@hapi/joi');
 
+var consumer = require('./consumer');
+var producer = require('./producer');
+
+
 Joi.objectId = require('joi-objectid')(Joi);
 
 const init = async () => {
-
+    consumer;
     const server = Hapi.server({
         port: process.env.PORT
     });
@@ -17,9 +21,9 @@ const init = async () => {
     server.route({
         method: 'POST',
         path: '/updateorderstatus/{id}',
-        handler: (req, h) => {
-      
-            return h.response('Send Order status success!!!  ' + req.payload.status + '   ' + req.params.id).code(200);
+        handler: async (req, h) => {
+            let res = await producer.sendMessage(req, h)
+            return h.response(res).code(200);
         },
         options: {
             description: 'Send A message to update status of Order',
@@ -42,6 +46,8 @@ const init = async () => {
         }
         console.log('Server running on %s', server.info.uri);
     });
+
+    
 };
 
 
